@@ -179,8 +179,7 @@ time_start = time.time()
 
 ########## DCV PERFORMANCE TEST ##########
 ### SHORT Input ###
-dmm.write("*TRG;GET;RDG?")
-volt = float(dmm.read())
+volt = float(dmm.query("X?"))
 if abs(volt) > 2e-3:
     print ("Smoke elapsedd, check connections")
     quit()
@@ -209,8 +208,8 @@ for ix in range (0,5):
     if ix == 4:
         dmm.write("DCV 1000,FAST_OFF")
     for i in range (0,10) :
-        dmm.write("*TRG;GET;RDG?")
-        volt = float(dmm.read())
+        
+        volt = float(dmm.query("X?"))
         array.extend([volt])
     sdev = np.std(array[1:],ddof = 1)
     median = np.median(array[1:])
@@ -225,7 +224,7 @@ for ix in range (0,5):
     
 
     dmm.write("DEVTN? ABSOLUTE")
-    Quality = float(dmm.read())
+    Quality = float(dmm.query("X?"))
     ws['K' + str(45+ix)] = Quality*1e6        
     print("Source = %s, dmm = %.10f V,  sdev = %.3f uV, Quality(DMM) = %.3f uV" % ("0 V", median, sdev*1e6, Quality*1e6))
     print(array)
@@ -276,8 +275,8 @@ for ix in range (0,42):
     else:
         time.sleep(10)
     for i in range (0,10):
-        dmm.write("*TRG;GET;RDG?")
-        volt = float(dmm.read())
+        
+        volt = float(dmm.query("X?"))
         array.extend([volt])
     sdev = np.std(array[1:],ddof = 1)
     median = np.median(array[1:])
@@ -295,7 +294,7 @@ for ix in range (0,42):
         
         
     dmm.write("DEVTN? READING")
-    Quality = float(dmm.read())
+    Quality = float(dmm.query("X?"))
     ws['K' + str(51+ix)] = Quality    
     print("Source = %.3f V, dmm = %.8f V,  sdev = %.3f ppm, Quality(DMM) =  %s" % (vout, median, sdev*1e6/median, Quality))
     print(array)
@@ -406,8 +405,8 @@ for ix in range (0,18):
         time.sleep(600) # waiting 600s at range 1M to 100M and 1 to 100R
         dmm.write("TRG_SRCE EXT")
     for i in range (0,10):
-        dmm.write("*TRG;GET;RDG?")
-        res = float(dmm.read())
+        
+        res = float(dmm.query("X?"))
         array.extend([res])
     sdev = np.std(array[1:],ddof = 1)
     median = np.median(array[1:])
@@ -427,7 +426,7 @@ for ix in range (0,18):
     
 
     dmm.write("DEVTN? READING")
-    Quality = float(dmm.read())
+    Quality = float(dmm.query("X?"))
     ws['K' + str(105+ix)] = Quality    
     print("Source = %s, dmm = %.8f ohm,  sdev = %.3f ppm, Quality(DMM) =  %s" % (res, median, sdev*1e6/median, Quality))
     print(array)
@@ -478,8 +477,8 @@ for ix in range (0,9):
         
         
     for i in range (0,10):
-        dmm.write("*TRG;GET;RDG?")
-        res = float(dmm.read())
+        
+        res = float(dmm.query("X?"))
         array.extend([res])
     sdev = np.std(array[1:],ddof = 1)
     median = np.median(array[1:])
@@ -491,7 +490,7 @@ for ix in range (0,9):
     cutstr = unc.split(",")
     ws['D' + str(130+ix)] = float(cutstr[0])
     dmm.write("DEVTN? ABSOLUTE")
-    Quality = float(dmm.read())
+    Quality = float(dmm.query("X?"))
     ws['K' + str(130+ix)] = Quality    
     print("Source = %s, dmm = %.8f ohm,  sdev = %.8f ohm,  Quality(DMM) = %.8f ohm " % ("0 ohm", median, sdev, Quality))
     print(array)
@@ -541,8 +540,8 @@ for ix in range (0,8):
         print("DMM OHMS TWR Zero Range: 100 MOHM")
         
     for i in range (0,10):
-        dmm.write("*TRG;GET;RDG?")
-        res = float(dmm.read())
+        
+        res = float(dmm.query("X?"))
         array.extend([res])
     sdev = np.std(array[1:],ddof = 1)
     median = np.median(array[1:])
@@ -556,7 +555,7 @@ for ix in range (0,8):
     ws['D' + str(146+ix)] = float(cutstr[0])
     
     dmm.write("DEVTN? ABSOLUTE")
-    Quality = float(dmm.read())
+    Quality = float(dmm.query("X?"))
     ws['K' + str(146+ix)] = Quality    
     print("Source = %s, dmm = %.8f ohm,  sdev = %.8f ohm, Quality(DMM) = %.8f ohm " % ("0 ohm", median, sdev, Quality))
     print(array)
@@ -604,8 +603,8 @@ for ix in range (0,7):
     
     time.sleep(60)
     for i in range (0,10):
-        dmm.write("*TRG;GET;RDG?")
-        volt = float(dmm.read())
+        
+        volt = float(dmm.query("X?"))
         array.extend([volt])
     sdev = np.std(array[1:],ddof = 1)
     median = np.median(array[1:])
@@ -621,7 +620,7 @@ for ix in range (0,7):
         ws['D' + str(161+ix)] = float(cutstr[0])
         
     dmm.write("DEVTN? READING")
-    Quality = float(dmm.read())
+    Quality = float(dmm.query("X?"))
     ws['K' + str(161+ix)] = Quality    
     print("Source = %s , dmm = %.8f Vac,  sdev = %.3f ppm, Quality(DMM) =  %s" % (acv, median, sdev*1e6/median, Quality))
     print(array)
@@ -678,8 +677,8 @@ for ix in range (0,112):
     else:
         time.sleep(10) 
     for i in range (0,10):
-        dmm.write("*TRG;GET;RDG?")
-        volt = float(dmm.read())
+        
+        volt = float(dmm.query("X?"))
         array.extend([volt])
     sdev = np.std(array[1:],ddof = 1)
     median = np.median(array[1:])
@@ -693,7 +692,7 @@ for ix in range (0,112):
     else:
         ws['D' + str(170+ix)] = float(cutstr[0])
     dmm.write("DEVTN? READING")
-    Quality = float(dmm.read())
+    Quality = float(dmm.query("X?"))
     ws['K' + str(170+ix)] = Quality        
     print("Source = %s , dmm = %.8f Vac,  sdev = %.3f ppm, Quality(DMM) =  %s" % (acv, median, sdev*1e6/median, Quality))
     print(array)
@@ -766,8 +765,8 @@ for ix in range (0,27):
     else:
         time.sleep(10)
     for i in range (0,5):
-        dmm.write("*TRG;GET;RDG?")
-        volt = float(dmm.read())
+        
+        volt = float(dmm.query("X?"))
         array.extend([volt])
     sdev = np.std(array[1:],ddof = 1)
     median = np.median(array[1:])
@@ -781,7 +780,7 @@ for ix in range (0,27):
     else:    
         ws['D' + str(287+ix)] = float(cutstr[0])
     dmm.write("DEVTN? READING")
-    Quality = float(dmm.read())
+    Quality = float(dmm.query("X?"))
     ws['K' + str(287+ix)] = Quality
     print("Source = %s, dmm = %.10f A,  sdev = %.3f ppm, Quality(DMM) = %s" % (iout, median, sdev*1e6/median, Quality))
     print(array)
@@ -846,8 +845,8 @@ for ix in range (0,54):
     else:
         time.sleep(10)
     for i in range (0,5):
-        dmm.write("*TRG;GET;RDG?")
-        volt = float(dmm.read())
+        
+        volt = float(dmm.query("X?"))
         array.extend([volt])
     sdev = np.std(array[1:],ddof = 1)
     median = np.median(array[1:])
@@ -863,7 +862,7 @@ for ix in range (0,54):
     else:
         ws['D' + str(317+ix)] = float(cutstr[0])
     dmm.write("DEVTN? READING")
-    Quality = float(dmm.read())
+    Quality = float(dmm.query("X?"))
     ws['K' + str(317+ix)] = Quality
     print("Source = %s, dmm = %.10f A,  sdev = %.3f ppm, Quality(DMM) =  %s" % (iout, median, sdev*1e6/median, Quality)) 
     print(array)
