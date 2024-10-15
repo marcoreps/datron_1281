@@ -38,7 +38,7 @@ dmm.write("*RST")
 time.sleep(2)
 dmm.write("DCV 1000,FILT_OFF,RESL8,FAST_OFF,TWO_WR")
 dmm.write("TRG_SRCE EXT")
-print("F8508A configured")
+print("1281 configured")
    
 wb = load_workbook('test_1281.xlsx')
 ws = wb.active
