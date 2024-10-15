@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Modified https://xdevs.com/doc/Wavetek/4950/calkit_4950.py for python3 and Fluke 8508a
-# Needs formatted https://xdevs.com/doc/Wavetek/4950/test_8508a.xlsx to be present
+# Needs formatted https://xdevs.com/doc/Wavetek/4950/test_1281.xlsx to be present
 
 import sys
 import pyvisa as visa
@@ -169,7 +169,7 @@ ws['H40'] = float("%.3f" % (info)) #
 
 
 ws['B373'] = float("%.2f" % ((time.time() - time_start)/60))
-wb.save('test_8508a.xlsx')
+wb.save('test_1281.xlsx')
 print("Initialization time elapsed:%.2f minutes"
       % ((time.time() - time_start)/60))
 
@@ -181,7 +181,7 @@ time_start = time.time()
 ### SHORT Input ###
 dmm.write("*TRG;GET;RDG?")
 volt = float(dmm.read())
-if abs(volt) > 1e-3:
+if abs(volt) > 2e-3:
     print ("Smoke elapsedd, check connections")
     quit()
 
@@ -229,7 +229,7 @@ for ix in range (0,5):
     ws['K' + str(45+ix)] = Quality*1e6        
     print("Source = %s, dmm = %.10f V,  sdev = %.3f uV, Quality(DMM) = %.3f uV" % ("0 V", median, sdev*1e6, Quality*1e6))
     print(array)
-wb.save('test_8508a.xlsx')
+wb.save('test_1281.xlsx')
 
 ### DCV test 0.01V to 1000V ###
 print("DCV GAIN TEST")
@@ -307,7 +307,7 @@ F5700EP.write("OUT 0 V, 0 Hz")
 time.sleep(5)
 F5700EP.write("STBY")    
 ws['C373'] = float("%.2f" % ((time.time() - time_start)/60))
-wb.save('test_8508a.xlsx')
+wb.save('test_1281.xlsx')
 print("DCV time elapsed:%.2f minutes"
       % ((time.time() - time_start)/60))
 time_start = time.time()
@@ -431,7 +431,7 @@ for ix in range (0,18):
     ws['K' + str(105+ix)] = Quality    
     print("Source = %s, dmm = %.8f ohm,  sdev = %.3f ppm, Quality(DMM) =  %s" % (res, median, sdev*1e6/median, Quality))
     print(array)
-wb.save('test_8508a.xlsx')
+wb.save('test_1281.xlsx')
 
 
 dmm.write("OHMS 1,FWR,FAST_OFF")
@@ -495,7 +495,7 @@ for ix in range (0,9):
     ws['K' + str(130+ix)] = Quality    
     print("Source = %s, dmm = %.8f ohm,  sdev = %.8f ohm,  Quality(DMM) = %.8f ohm " % ("0 ohm", median, sdev, Quality))
     print(array)
-wb.save('test_8508a.xlsx')
+wb.save('test_1281.xlsx')
 
 
 dmm.write("OHMS 10,TWR,FAST_OFF")
@@ -563,7 +563,7 @@ for ix in range (0,8):
     
 F5700EP.write("EXTSENSE OFF")    
 ws['D373'] = float("%.2f" % ((time.time() - time_start)/60))
-wb.save('test_8508a.xlsx')
+wb.save('test_1281.xlsx')
 print("OHM time elapsed:%.2f minutes"
       % ((time.time() - time_start)/60))
 
@@ -627,7 +627,7 @@ for ix in range (0,7):
     print(array)
     
 F5700EP.write("STBY")
-wb.save('test_8508a.xlsx')
+wb.save('test_1281.xlsx')
 
 ### ACV SYNC Mode ###                                                                   
 ACV_list = ["0.001 V, 10 Hz","0.001 V, 20 Hz","0.001 V, 30 Hz","0.001 V, 40 Hz","0.001 V, 55 Hz","0.001 V, 300 Hz","0.001 V, 1 KHz","0.001 V, 10 KHz","0.001 V, 20 KHz","0.001 V, 30 KHz","0.001 V, 50 KHz",
@@ -705,7 +705,7 @@ time.sleep(5)
 F5700EP.write("STBY")
 
 ws['E373'] = float("%.2f" % ((time.time() - time_start)/60))
-wb.save('test_8508a.xlsx')
+wb.save('test_1281.xlsx')
 print("ACV time elapsed:%.2f minutes"
       %((time.time() - time_start)/60))
 
@@ -785,12 +785,12 @@ for ix in range (0,27):
     ws['K' + str(287+ix)] = Quality
     print("Source = %s, dmm = %.10f A,  sdev = %.3f ppm, Quality(DMM) = %s" % (iout, median, sdev*1e6/median, Quality))
     print(array)
-wb.save('test_8508a.xlsx')
+wb.save('test_1281.xlsx')
 
 F5700EP.write("OUT 0 uA, 0 Hz")
 
 ws['F373'] = float("%.2f" % ((time.time() - time_start)/60))
-wb.save('test_8508a.xlsx')
+wb.save('test_1281.xlsx')
 print("DCI time elapsed:%.2f minutes"
       % ((time.time() - time_start)/60))
 time_start = time.time()
@@ -870,13 +870,13 @@ for ix in range (0,54):
 
 
 ws['G373'] = float("%.2f" % ((time.time() - time_start)/60))
-wb.save('test_8508a.xlsx')
+wb.save('test_1281.xlsx')
 print("ACI time elapsed:%.2f minutes"
       % ((time.time() - time_start)/60))
 
 #Calibration Test Results Summary
 
-wb.save('test_8508a.xlsx')
+wb.save('test_1281.xlsx')
 
 #Reset the DMM and MFC####
 F5700EP.write("OUT 0 V, 0 Hz")
