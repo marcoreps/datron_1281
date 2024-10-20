@@ -143,7 +143,7 @@ F5700EP.write("OUT?")
 res = F5700EP.read()
 cutstr = res.split(",")
 actual_res = float(cutstr[0])
-dmm.write("HI_OHMS "+str(r)+",FILT_ON,RESL6,TWR,FAST_OFF")
+dmm.write("HI_OHMS 100000000,FILT_ON,RESL6,TWR,FAST_OFF")
 logging.info("Cal OHMS "+str(actual_res)+" Ohm")
 time.sleep(settling_time)
 if(dmm.query("CAL? "+str(actual_res)) != '0\n'):
@@ -155,11 +155,15 @@ F5700EP.write("OUT 0")
 F5700EP.write("EXTSENSE ON")
 dmm.write("TRUE_OHMS 10,FILT_ON,RESL8,FAST_OFF")
 logging.info("Cal TRUE_OHMS 10 Ohm Range Zero")
-time.sleep(settling_time)
-if(dmm.query("CAL? "+str(actual_res)) != '0\n'):
+time.sleep(settling_time*2)
+if(dmm.query("CAL?") != '0\n'):
     logging.info("Error")
     finish()
 F5700EP.write("OUT 10")
+F5700EP.write("OUT?")
+res = F5700EP.read()
+cutstr = res.split(",")
+actual_res = float(cutstr[0])
 logging.info("Cal TRUE_OHMS 10 Ohm Range Full Scale")
 time.sleep(settling_time)
 if(dmm.query("CAL? "+str(actual_res)) != '0\n'):
@@ -174,3 +178,16 @@ while 1:
         break
     else:
         print("input again")
+        
+########## DCI ADJUST ##########
+F5700EP.write("OUT 0 A, 0 Hz")
+F5700EP.write("OPER")
+for i in [0.0001,0.001,0.01,0.1,1]:
+    for scale in [0,-1,1]:
+        dmm.write("DCI "+str(i*scale)+",FILT_ON,RESL6,FAST_OFF")
+        F5700EP.write("OUT "+str(i*scale))
+        logging.info("Cal DCI "+str(i*scale)+" A")
+        time.sleep(settling_time)
+        if(dmm.query("CAL?") != '0\n'):
+            logging.info("Error")
+            finish()
