@@ -136,17 +136,41 @@ for r in [100,1000,10000,100000,1000000,10000000]:
         logging.info("Error")
         finish()
 
+### HI_OHMS ###
 F5700EP.write("EXTSENSE OFF")
+F5700EP.write("OUT 100000000") 
+F5700EP.write("OUT?")
+res = F5700EP.read()
+cutstr = res.split(",")
+actual_res = float(cutstr[0])
+dmm.write("HI_OHMS "+str(r)+",FILT_ON,RESL6,TWR,FAST_OFF")
+logging.info("Cal OHMS "+str(actual_res)+" Ohm")
+time.sleep(settling_time)
+if(dmm.query("CAL? "+str(actual_res)) != '0\n'):
+    logging.info("Error")
+    finish()
 
-for r in [100000000,1000000000]:
-    F5700EP.write("OUT "+str(r)) 
-    F5700EP.write("OUT?")
-    res = F5700EP.read()
-    cutstr = res.split(",")
-    actual_res = float(cutstr[0])
-    dmm.write("OHMS "+str(r)+",FILT_ON,RESL8,TWR,FAST_OFF")
-    logging.info("Cal OHMS "+str(actual_res)+" Ohm")
-    time.sleep(settling_time)
-    if(dmm.query("CAL? "+str(actual_res)) != '0\n'):
-        logging.info("Error")
-        finish()
+### TRUE_OHMS ###
+F5700EP.write("OUT 0")
+F5700EP.write("EXTSENSE ON")
+dmm.write("TRUE_OHMS 10,FILT_ON,RESL8,FAST_OFF")
+logging.info("Cal TRUE_OHMS 10 Ohm Range Zero")
+time.sleep(settling_time)
+if(dmm.query("CAL? "+str(actual_res)) != '0\n'):
+    logging.info("Error")
+    finish()
+F5700EP.write("OUT 10")
+logging.info("Cal TRUE_OHMS 10 Ohm Range Full Scale")
+time.sleep(settling_time)
+if(dmm.query("CAL? "+str(actual_res)) != '0\n'):
+    logging.info("Error")
+    finish()
+    
+F5700EP.write("STBY")
+    
+while 1:
+    str_input = input("connect the cable for current adjustments, and then input: go\n")
+    if (str_input == 'go'):
+        break
+    else:
+        print("input again")
