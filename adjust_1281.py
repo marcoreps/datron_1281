@@ -52,6 +52,13 @@ time.sleep(2)
 dmm.write("ENBCAL EXTNL")
 logging.info("1281 configured")
 
+while 1:
+    str_input = input("connect the cable for voltage and 4W resistance adjustments, and then input: go\n")
+    if (str_input == 'go'):
+        break
+    else:
+        print("input again")
+
 ########## DCV ADJUST ##########
 for v in [0.1,1,10,100,1000]:
     for pol in [0,-1,1]:
