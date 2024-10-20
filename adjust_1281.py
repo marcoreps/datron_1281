@@ -60,9 +60,9 @@ while 1:
         print("input again")
 
 ########## DCV ADJUST ##########
-for v in [0.1,1,10,100,1000]:
+for v in [0.1,1,10,100]:
     for pol in [0,-1,1]:
-        dmm.write("DCV "+str(v)+",FILT_ON,RESL8,FAST_OFF,TWO_WR")
+        dmm.write("DCV "+str(v)+",FILT_ON,RESL8,FAST_OFF")
         F5700EP.write("OUT "+str(pol*v))
         F5700EP.write("OPER")
         logging.info("Cal DCV "+str(v*pol))
@@ -77,7 +77,7 @@ time.sleep(10)
 ########## ACV ADJUST ##########
 ### LF ###
 ### 0.1V Range ###
-dmm.write("ACV 0.1,RESL6,TWO_WR,FAST_OFF")
+dmm.write("ACV 0.1,RESL6,FAST_OFF")
 F5700EP.write("OUT 0.01 V, 1000 Hz")
 logging.info("Cal ACV 1kHz 10 mV")
 time.sleep(settling_time)
@@ -94,7 +94,7 @@ if(dmm.query("CAL?") != '0\n'):
 ### Other Ranges ###
 for v in [1,10,100,1000]:
     for scale in [0.01,1]:
-        dmm.write("ACV "+str(v)+",RESL6,TWO_WR,FAST_OFF")
+        dmm.write("ACV "+str(v)+",RESL6,FAST_OFF")
         F5700EP.write("OUT "+str(scale*v)+" V, 1000 Hz")
         F5700EP.write("OPER")
         logging.info("Cal ACV 1kHz "+str(v*scale)+" V")
@@ -106,7 +106,7 @@ for v in [1,10,100,1000]:
 ### HF ###
 ### Other Ranges ###
 for v in [0.1,1,10,100]:
-    dmm.write("ACV "+str(v)+",RESL6,TWO_WR,FAST_OFF")
+    dmm.write("ACV "+str(v)+",RESL6,FAST_OFF")
     F5700EP.write("OUT "+str(v)+" V, 60 kHz")
     F5700EP.write("OPER")
     logging.info("Cal ACV 60kHz "+str(v)+" V")
@@ -116,7 +116,7 @@ for v in [0.1,1,10,100]:
         finish()
 
 ### 1000V Range ###
-dmm.write("ACV 1000,RESL6,TWO_WR,FAST_OFF")
+dmm.write("ACV 1000,RESL6,FAST_OFF")
 F5700EP.write("OUT 1000 V, 30 kHz")
 F5700EP.write("OPER")
 logging.info("Cal ACV 30kHz 1000 V")
