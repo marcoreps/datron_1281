@@ -53,22 +53,12 @@ dmm.write("ENBCAL EXTNL")
 logging.info("1281 configured")
 
 ########## DCV ADJUST ##########
-### SHORT Input ###
-for v in ['0.1','1','10','100','1000']:
-    dmm.write("DCV "+v+",FILT_ON,RESL8,FAST_OFF,TWO_WR")
-    logging.info("Cal DCV Zero "+v)
-    time.sleep(settling_time)
-    if(dmm.query("CAL?") != '0\n'):
-        logging.info("Error")
-        finish()
-    
-### FULL RANGE Input ###
 for v in [0.1,1,10,100,1000]:
-    for pol in [-1,1]:
+    for pol in [0,-1,1]:
         dmm.write("DCV "+str(v)+",FILT_ON,RESL8,FAST_OFF,TWO_WR")
         F5700EP.write("OUT "+str(pol*v))
         F5700EP.write("OPER")
-        logging.info("Cal DCV Full Range "+str(v*pol))
+        logging.info("Cal DCV "+str(v*pol))
         time.sleep(settling_time)
         if(dmm.query("CAL?") != '0\n'):
             logging.info("Error")
@@ -78,6 +68,7 @@ F5700EP.write("OUT 0.0 V, 0 Hz")
 time.sleep(10)
 
 ########## ACV ADJUST ##########
+### LF ###
 ### 0.1V Range ###
 dmm.write("ACV 0.1,RESL6,TWO_WR,FAST_OFF")
 F5700EP.write("OUT 0.01 V, 1000 Hz")
@@ -95,7 +86,7 @@ if(dmm.query("CAL?") != '0\n'):
         
 ### Other Ranges ###
 for v in [1,10,100,1000]:
-    for scale in [0.001,1]:
+    for scale in [0.01,1]:
         dmm.write("ACV "+str(v)+",RESL6,TWO_WR,FAST_OFF")
         F5700EP.write("OUT "+str(scale*v)+" V, 1000 Hz")
         F5700EP.write("OPER")
@@ -104,6 +95,28 @@ for v in [1,10,100,1000]:
         if(dmm.query("CAL?") != '0\n'):
             logging.info("Error")
             finish()
+            
+### HF ###
+### Other Ranges ###
+for v in [0.1,1,10,100]:
+    dmm.write("ACV "+str(v)+",RESL6,TWO_WR,FAST_OFF")
+    F5700EP.write("OUT "+str(v)+" V, 60 kHz")
+    F5700EP.write("OPER")
+    logging.info("Cal ACV 60kHz "+str(v)+" V")
+    time.sleep(settling_time)
+    if(dmm.query("CAL?") != '0\n'):
+        logging.info("Error")
+        finish()
+
+### 1000V Range ###
+dmm.write("ACV 1000,RESL6,TWO_WR,FAST_OFF")
+F5700EP.write("OUT 1000 V, 30 kHz")
+F5700EP.write("OPER")
+logging.info("Cal ACV 30kHz 1000 V")
+time.sleep(settling_time)
+if(dmm.query("CAL?") != '0\n'):
+    logging.info("Error")
+    finish()
 
 F5700EP.write("OUT 0.0 V, 0 Hz")
 time.sleep(10)
@@ -191,3 +204,51 @@ for i in [0.0001,0.001,0.01,0.1,1]:
         if(dmm.query("CAL?") != '0\n'):
             logging.info("Error")
             finish()
+            
+F5700EP.write("STBY")
+
+            
+########## ACI ADJUST ##########
+### LF ###
+### 100µA Range ###
+dmm.write("ACI 0.0001,RESL5,FAST_OFF")
+F5700EP.write("OUT 0.00001 A, 300 Hz")
+F5700EP.write("OPER")
+logging.info("Cal ACV 300 Hz 10 µA")
+time.sleep(settling_time)
+if(dmm.query("CAL?") != '0\n'):
+    logging.info("Error")
+    finish()
+F5700EP.write("OUT 0.0001 A, 300 Hz")
+logging.info("Cal ACV 300 Hz 100 µA")
+time.sleep(settling_time)
+if(dmm.query("CAL?") != '0\n'):
+    logging.info("Error")
+    finish()
+        
+### Other Ranges ###
+for i in [0.001,0.01,0.1,1]:
+    for scale in [0.01,1]:
+        dmm.write("ACI "+str(i*scale)+",RESL5,FAST_OFF")
+        F5700EP.write("OUT "+str(scale*i)+" A, 300 Hz")
+        F5700EP.write("OPER")
+        logging.info("Cal ACI 300 Hz "+str(i*scale)+" A")
+        time.sleep(settling_time)
+        if(dmm.query("CAL?") != '0\n'):
+            logging.info("Error")
+            finish()
+        F5700EP.write("STBY")
+        
+### HF ###
+for i in [0.00001,0.001,0.01,0.1,1]:
+    dmm.write("ACI "+str(i)+",RESL5,FAST_OFF")
+    F5700EP.write("OUT "+str(i)+" A, 5 kHz")
+    F5700EP.write("OPER")
+    logging.info("Cal ACI 5 kHz "+str(i)+" A")
+    time.sleep(settling_time)
+    if(dmm.query("CAL?") != '0\n'):
+        logging.info("Error")
+        finish()
+    F5700EP.write("STBY")
+
+time.sleep(10)
