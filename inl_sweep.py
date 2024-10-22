@@ -8,7 +8,7 @@ import numpy
 umin = -10.25
 umax = 10.25
 ustep = 0.25
-wait_settle = 30
+wait_settle = 15
 samples_per_meter_per_step = 1
 NPLC = 100
 
@@ -18,7 +18,7 @@ instruments = dict()
 rm = visa.ResourceManager()
 
 
-instruments["3458A"]=rm.open_resource("TCPIP::192.168.0.88::GPIB0,22")
+instruments["3458A"]=rm.open_resource("TCPIP::192.168.0.88::GPIB0,23")
 instruments["3458A"].timeout = 200000
 instruments["3458A"].clear()
 instruments["3458A"].write("RESET")
@@ -81,7 +81,7 @@ with open('csv/'+timestr+'REPS5700A_3458A_J1281_INL.csv', mode='w') as csv_file:
         instruments["F5700A"].write("OUT "+str(u))
         instruments["F5700A"].close()
         print('main setting source to '+str(u)+'V')
-        instruments["3458A"]=rm.open_resource("TCPIP::192.168.0.88::GPIB0,22")
+        instruments["3458A"]=rm.open_resource("TCPIP::192.168.0.88::GPIB0,23")
         instruments["3458A"].timeout = 200000
         instruments["3458A"].write("NPLC 10")
         instruments["3458A"].write("TARM AUTO")
@@ -92,7 +92,7 @@ with open('csv/'+timestr+'REPS5700A_3458A_J1281_INL.csv', mode='w') as csv_file:
         instruments["J1281"].write("TRG_SRCE INT")
         instruments["J1281"].close()
         time.sleep(wait_settle)
-        instruments["3458A"]=rm.open_resource("TCPIP::192.168.0.88::GPIB0,22")
+        instruments["3458A"]=rm.open_resource("TCPIP::192.168.0.88::GPIB0,23")
         instruments["3458A"].timeout = 200000
         instruments["3458A"].write("NPLC 100")
         instruments["3458A"].write("TARM HOLD")
@@ -108,7 +108,7 @@ with open('csv/'+timestr+'REPS5700A_3458A_J1281_INL.csv', mode='w') as csv_file:
         J1281_out = 0.0
         
         for n in range (samples_per_meter_per_step):
-            instruments["3458A"]=rm.open_resource("TCPIP::192.168.0.88::GPIB0,22")
+            instruments["3458A"]=rm.open_resource("TCPIP::192.168.0.88::GPIB0,23")
             instruments["3458A"].timeout = 200000
             instruments["3458A"].write("TARM SGL")
             HP3458A_out += float(instruments["3458A"].read()) / samples_per_meter_per_step
