@@ -7,6 +7,7 @@ import logging
 
 
 def finish():
+    dmm.query("CAL?")
     logging.info("Shutting down...")
     #Reset the DMM and MFC####
     F5700EP.write("OUT 0 V, 0 Hz")
@@ -20,6 +21,7 @@ def finish():
     
     
 settling_time = 60
+high_freq_iterations = 3
 
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)-8s %(message)s')
@@ -31,6 +33,15 @@ dmm = rm.open_resource("TCPIP::192.168.0.88::GPIB0,16") # Ethernet GPIB Dongle
 
 #F5700EP = rm.open_resource('GPIB0::1::INSTR') # Local GPIB Dongle
 ##dmm = rm.open_resource('GPIB0::9::INSTR') # Local GPIB Dongle
+
+
+while 1:
+    str_input = input("connect the cable for voltage and 4W resistance adjustments, and then input: go\n")
+    if (str_input == 'go'):
+        break
+    else:
+        print("input again")
+
 
 ########## DMM and MFC ##########   
 F5700EP.write("*RST")
@@ -52,15 +63,8 @@ time.sleep(2)
 dmm.write("ENBCAL EXTNL")
 logging.info("1281 configured")
 
-while 1:
-    str_input = input("connect the cable for voltage and 4W resistance adjustments, and then input: go\n")
-    if (str_input == 'go'):
-        break
-    else:
-        print("input again")
-
 ########## DCV ADJUST ##########
-for v in [0.1,1,10,100]:
+for v in [0.1,1,10,100,1000]:
     for pol in [0,-1,1]:
         dmm.write("DCV "+str(v)+",FILT_ON,RESL8,FAST_OFF")
         F5700EP.write("OUT "+str(pol*v))
@@ -90,7 +94,7 @@ time.sleep(settling_time)
 if(dmm.query("CAL?") != '0\n'):
     logging.info("Error")
     finish()
-        
+
 ### Other Ranges ###
 for v in [1,10,100,1000]:
     for scale in [0.01,1]:
@@ -102,7 +106,10 @@ for v in [1,10,100,1000]:
         if(dmm.query("CAL?") != '0\n'):
             logging.info("Error")
             finish()
-            
+
+F5700EP.write("OUT 0.1 V, 60 kHz")
+time.sleep(10)
+
 ### HF ###
 ### Other Ranges ###
 for v in [0.1,1,10,100]:
