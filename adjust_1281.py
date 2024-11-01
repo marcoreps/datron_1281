@@ -15,7 +15,6 @@ def finish():
     F5700EP.write("*RST")
     F5700EP.write("*CLS")
     F5700EP.close()
-    dmm.write("*RST")
     dmm.close()
     quit()
     
@@ -118,9 +117,10 @@ for v in [0.1,1,10,100]:
     F5700EP.write("OPER")
     logging.info("Cal ACV 60kHz "+str(v)+" V")
     time.sleep(settling_time)
-    if(dmm.query("CAL?") != '0\n'):
-        logging.info("Error")
-        finish()
+    for iteration in high_freq_iterations:
+        if(dmm.query("CAL?") != '0\n'):
+            logging.info("Error")
+            finish()
 
 ### 1000V Range ###
 dmm.write("ACV 1000,RESL6,FAST_OFF")
@@ -128,9 +128,10 @@ F5700EP.write("OUT 1000 V, 30 kHz")
 F5700EP.write("OPER")
 logging.info("Cal ACV 30kHz 1000 V")
 time.sleep(settling_time)
-if(dmm.query("CAL?") != '0\n'):
-    logging.info("Error")
-    finish()
+for iteration in high_freq_iterations:
+    if(dmm.query("CAL?") != '0\n'):
+        logging.info("Error")
+        finish()
 
 F5700EP.write("OUT 0.0 V, 0 Hz")
 time.sleep(10)
@@ -239,7 +240,7 @@ time.sleep(settling_time)
 if(dmm.query("CAL?") != '0\n'):
     logging.info("Error")
     finish()
-        
+
 ### Other Ranges ###
 for i in [0.001,0.01,0.1,1]:
     for scale in [0.01,1]:
@@ -252,7 +253,7 @@ for i in [0.001,0.01,0.1,1]:
             logging.info("Error")
             finish()
         F5700EP.write("STBY")
-        
+
 ### HF ###
 for i in [0.00001,0.001,0.01,0.1,1]:
     dmm.write("ACI "+str(i)+",RESL5,FAST_OFF")
