@@ -311,7 +311,7 @@ F5700EP.write("OPER")
 time.sleep(10)
 
 
-dmm.write("OHMS 1,FWR,FAST_OFF")
+dmm.write("OHMS 1,FWR,FAST_OFF,RESL8")
 dmm.write("ZERO?")
 time.sleep(100)
 
@@ -325,58 +325,58 @@ for ix in range (0,18):
     unc = 0
     res = MFC_OHM_list[ix]
     if ix == 0:
-        dmm.write("OHMS 1,FWR,FAST_OFF")
+        dmm.write("OHMS 1,FWR,FAST_OFF,RESL8")
         print("DMM OHMS FWR Range: 10 OHM")
     elif ix == 1:
-        dmm.write("OHMS 1,FWR,FAST_OFF")
+        dmm.write("OHMS 1,FWR,FAST_OFF,RESL8")
         print("DMM OHMS FWR Range: 10 OHM")
     elif ix == 2:
-        dmm.write("OHMS 10,FWR,FAST_OFF")
+        dmm.write("OHMS 10,FWR,FAST_OFF,RESL8")
         print("DMM OHMS FWR Range: 10 OHM")
     elif ix == 3:
-        dmm.write("OHMS 10,FWR,FAST_OFF")
+        dmm.write("OHMS 10,FWR,FAST_OFF,RESL8")
         print("DMM OHMS FWR Range: 10 OHM")
     elif ix == 4:
-        dmm.write("OHMS 100,FWR,FAST_OFF")
+        dmm.write("OHMS 100,FWR,FAST_OFF,RESL8")
         print("DMM OHMS FWR Range: 100 OHM")
     elif ix == 5:
-        dmm.write("OHMS 100,FWR,FAST_OFF")
+        dmm.write("OHMS 100,FWR,FAST_OFF,RESL8")
         print("DMM OHMS FWR Range: 100 OHM")
     elif ix == 6:
-        dmm.write("OHMS 1000,FWR,FAST_OFF")
+        dmm.write("OHMS 1000,FWR,FAST_OFF,RESL8")
         print("DMM OHMS FWR Range: 1 KOHM")
     elif ix == 7:
-        dmm.write("OHMS 1000,FWR,FAST_OFF")
+        dmm.write("OHMS 1000,FWR,FAST_OFF,RESL8")
         print("DMM OHMS FWR Range: 1 KOHM")
     elif ix == 8:
-        dmm.write("OHMS 10000,FWR,FAST_OFF")
+        dmm.write("OHMS 10000,FWR,FAST_OFF,RESL8")
         print("DMM OHMS FWR Range: 10 KOHM")
     elif ix == 9:
-        dmm.write("OHMS 10000,FWR,FAST_OFF")
+        dmm.write("OHMS 10000,FWR,FAST_OFF,RESL8")
         print("DMM OHMS FWR Range: 10 KOHM")
     elif ix == 10:
-        dmm.write("OHMS 100000,FWR,FAST_OFF")
+        dmm.write("OHMS 100000,FWR,FAST_OFF,RESL8")
         print("DMM OHMS FWR Range: 100 KOHM")
     elif ix == 11:
-        dmm.write("OHMS 100000,FWR,FAST_OFF")
+        dmm.write("OHMS 100000,FWR,FAST_OFF,RESL8")
         print("DMM OHMS FWR Range: 100 KOHM")
     elif ix == 12:
-        dmm.write("OHMS 1000000,FWR,FAST_OFF")
+        dmm.write("OHMS 1000000,FWR,FAST_OFF,RESL8")
         print("DMM OHMS FWR Range: 1 MOHM")
     elif ix == 13:
-        dmm.write("OHMS 1000000,FWR,FAST_OFF")
+        dmm.write("OHMS 1000000,FWR,FAST_OFF,RESL8")
         print("DMM OHMS FWR Range: 1 MOHM")
     elif ix == 14:
-        dmm.write("OHMS 10000000,FWR,FAST_OFF")
+        dmm.write("OHMS 10000000,FWR,FAST_OFF,RESL8")
         print("DMM OHMS FWR Range: 10 MOHM")
     elif ix == 15:
-        dmm.write("OHMS 10000000,FWR,FAST_OFF")
+        dmm.write("OHMS 10000000,FWR,FAST_OFF,RESL8")
         print("DMM OHMS FWR Range: 10 MOHM")
     elif ix == 16:
-        dmm.write("OHMS 100000000,TWR,FAST_OFF")
+        dmm.write("HI_OHMS 100000000,FWR,FAST_OFF")
         F5700EP.write("EXTSENSE OFF")
     elif ix == 17:
-        dmm.write("HIV_OHMS 100000000,TWR,FAST_OFF")
+        dmm.write("HI_OHMS 100000000,TWR,FAST_OFF")
         F5700EP.write("EXTSENSE OFF")
 
         print("DMM OHMS TWR Range: 100 MOHM, PCENT_100") 
@@ -433,31 +433,31 @@ for ix in range (0,9):
     median = 0.0
     unc = 0
     if ix == 0:
-        dmm.write("OHMS 1,FWR,FAST_OFF")
+        dmm.write("OHMS 1,FWR,FAST_OFF,RESL8")
         print("DMM FWR Zero Range: 1 OHM")
     if ix == 1:
-        dmm.write("OHMS 10,FWR,FAST_OFF")
+        dmm.write("OHMS 10,FWR,FAST_OFF,RESL8")
         print("DMM FWR Zero Range: 10 OHM")
     elif ix == 2:
-        dmm.write("OHMS 100,FWR,FAST_OFF")
+        dmm.write("OHMS 100,FWR,FAST_OFF,RESL8")
         print("DMM FWR Zero Range: 100 OHM")
     elif ix == 3:
-        dmm.write("OHMS 1000,FWR,FAST_OFF")
+        dmm.write("OHMS 1000,FWR,FAST_OFF,RESL8")
         print("DMM FWR Zero Range: 1 KOHM")
     elif ix == 4:
-        dmm.write("OHMS 10000,FWR,FAST_OFF")
+        dmm.write("OHMS 10000,FWR,FAST_OFF,RESL8")
         print("DMM FWR Zero Range: 10 KOHM")
     elif ix == 5:
-        dmm.write("OHMS 100000,FWR,FAST_OFF")
+        dmm.write("OHMS 100000,FWR,FAST_OFF,RESL8")
         print("DMM FWR Zero Range: 100 KOHM")
     elif ix == 6:
-        dmm.write("OHMS 1000000,FWR,FAST_OFF")
+        dmm.write("OHMS 1000000,FWR,FAST_OFF,RESL8")
         print("DMM FWR Zero Range: 1 MOHM")
     elif ix == 7:
-        dmm.write("OHMS 10000000,FWR,FAST_OFF")
+        dmm.write("OHMS 10000000,FWR,FAST_OFF,RESL8")
         print("DMM FWR Zero Range: 10 MOHM")
     elif ix == 8:
-        dmm.write("OHMS 100000000,FWR,FAST_OFF")
+        dmm.write("HI_OHMS 100000000,FWR,FAST_OFF")
         print("DMM FWR Zero Range: 100 MOHM")
         
         
@@ -480,7 +480,7 @@ for ix in range (0,9):
 wb.save('test_1281.xlsx')
 
 
-dmm.write("OHMS 10,TWR,FAST_OFF")
+dmm.write("OHMS 10,TWR,FAST_OFF,RESL8")
 ### OHM zero 2w ###
 F5700EP.write("OUT 0 OHM")
 F5700EP.write("EXTSENSE OFF")
@@ -494,35 +494,34 @@ for ix in range (0,8):
     unc = 0
 
     if ix == 0:
-        dmm.write("OHMS 1,TWR,FAST_OFF")
+        dmm.write("OHMS 1,TWR,FAST_OFF,RESL8")
         print("DMM OHMS TWR Zero Range: 1 OHM")
     if ix == 1:
-        dmm.write("OHMS 10,TWR,FAST_OFF")
+        dmm.write("OHMS 10,TWR,FAST_OFF,RESL8")
         print("DMM OHMS TWR Zero Range: 10 OHM")
     elif ix == 2:
-        dmm.write("OHMS 100,TWR,FAST_OFF")
+        dmm.write("OHMS 100,TWR,FAST_OFF,RESL8")
         print("DMM OHMS TWR Zero Range: 100 OHM")
     elif ix == 3:
-        dmm.write("OHMS 1000,TWR,FAST_OFF")
+        dmm.write("OHMS 1000,TWR,FAST_OFF,RESL8")
         print("DMM OHMS TWR Zero Range: 1 KOHM")
     elif ix == 4:
-        dmm.write("OHMS 10000,TWR,FAST_OFF")
+        dmm.write("OHMS 10000,TWR,FAST_OFF,RESL8")
         print("DMM OHMS TWR Zero Range: 10 KOHM")
     elif ix == 5:
-        dmm.write("OHMS 100000,TWR,FAST_OFF")
+        dmm.write("OHMS 100000,TWR,FAST_OFF,RESL8")
         print("DMM OHMS TWR Zero Range: 100 KOHM")
     elif ix == 6:
-        dmm.write("OHMS 1000000,TWR,FAST_OFF")
+        dmm.write("OHMS 1000000,TWR,FAST_OFF,RESL8")
         print("DMM OHMS TWR Zero Range: 1 MOHM")
     elif ix == 7:
-        dmm.write("OHMS 10000000,TWR,FAST_OFF")
+        dmm.write("OHMS 10000000,TWR,FAST_OFF,RESL8")
         print("DMM OHMS TWR Zero Range: 10 MOHM")        
     elif ix == 8:
-        dmm.write("OHMS 100000000,TWR,FAST_OFF")
+        dmm.write("OHMS 100000000,TWR,FAST_OFF,RESL8")
         print("DMM OHMS TWR Zero Range: 100 MOHM")
         
     for i in range (0,10):
-        
         res = float(dmm.query("X?"))
         array.extend([res])
     sdev = np.std(array[1:],ddof = 1)
@@ -556,7 +555,7 @@ print("ACV PERFORMANCE TEST")
 ACV_LIN_list = ["1 V,1 KHz","2 V, 1 KHz","5 V, 1 KHz","10 V, 1 KHz","12 V, 1 KHz","15 V, 1 KHz","19 V, 1 KHz"]
 ### AC VOLTAGE Linearity Checks ###
 
-dmm.write("ACV 10,RESL8,FAST_OFF")
+dmm.write("ACV 10,RESL6")
 
 F5700EP.write("OUT 1 V, 1 KHz")
 F5700EP.write("OPER")
@@ -593,7 +592,7 @@ for ix in range (0,7):
     print("Source = %s , dmm = %.8f Vac,  sdev = %.3f ppm" % (acv, median, sdev*1e6/median))
     print(array)
     
-F5700EP.write("STBY")
+
 wb.save('test_1281.xlsx')
 
 ### ACV SYNC Mode ###                                                                   
@@ -612,10 +611,11 @@ ACV_list = ["0.001 V, 10 Hz","0.001 V, 20 Hz","0.001 V, 30 Hz","0.001 V, 40 Hz",
             "100 V, 10 Hz","100 V, 20 Hz","100 V, 30 Hz","100 V, 40 Hz","100 V, 55 Hz","100 V, 300 Hz","100 V, 1 KHz","100 V, 10 KHz","100 V, 20 KHz","100 V, 30 KHz","100 V, 50 KHz",
             "100 V, 100 KHz","100 V, 200 KHz","1000 V, 55 Hz","1000 V, 300 Hz","700 V, 1 KHz"]
 
+F5700EP.write("OUT %s" % ACV_list[0])
+time.sleep(2)
 
 
-
-dmm.write("ACV 10,RESL8,FAST_OFF")
+dmm.write("ACV 10,RESL8")
 for ix in range (0,112):
     array = []
     sdev = 0.0
@@ -625,20 +625,18 @@ for ix in range (0,112):
        
     acv = ACV_list[ix]
     cutstr = acv.split(" ")
-
-    dmm.write("ACV %s,FAST_OFF" %(cutstr[0]))
     
-    if (cutstr[4]=="Hz"):
-        if (int(cutstr[3])<=9):
-            dmm.write("ACV FILT1HZ")
-        elif (int(cutstr[3])<=39):
-            dmm.write("ACV FILT10HZ")
-        elif (int(cutstr[3])<=99):
-            dmm.write("ACV FILT40HZ")
+    if (cutstr[3]=="Hz"):
+        if (int(cutstr[2])<=9):
+            dmm.write("ACV %s,FILT1HZ,RESL6" %(cutstr[0]))
+        elif (int(cutstr[2])<=39):
+            dmm.write("ACV %s,FILT10HZ,RESL6" %(cutstr[0]))
+        elif (int(cutstr[2])<=99):
+            dmm.write("ACV %s,FILT40HZ,RESL6" %(cutstr[0]))
         else:
-            dmm.write("ACV FILT100HZ")
+            dmm.write("ACV %s,FILT100HZ,RESL6" %(cutstr[0]))
     else:
-        dmm.write("ACV FILT100HZ")
+        dmm.write("ACV %s,FILT100HZ,RESL6" %(cutstr[0]))
     
     F5700EP.write("FAULT?")
     fault = F5700EP.read()
@@ -707,7 +705,7 @@ DCI_list = ["1 uA","10 uA","50 uA","100 uA","-100 uA","-50 uA","-10 uA",
             "10 mA","50 mA","100 mA","-100 mA","-50 mA",
             "0.1 A","0.5 A","-0.5 A","-1 A","1 A"]
             
-dmm.write("DCI 1,FAST_OFF")
+dmm.write("DCI 1,FAST_OFF,RESL6")
 F5700EP.write("OUT 0 uA, 0 Hz")
 F5700EP.write("CUR_POST AUX")
 for ix in range (0,27):
@@ -718,22 +716,22 @@ for ix in range (0,27):
 
     iout = DCI_list[ix]
     if ix < 7:
-        dmm.write("DCI 0.0001,FAST_OFF")
+        dmm.write("DCI 0.0001,FAST_OFF,RESL6")
         print("DMM DCI Range: 100uA")
     elif ix >= 7 and ix < 12:
-        dmm.write("DCI 0.001,FAST_OFF")
+        dmm.write("DCI 0.001,FAST_OFF,RESL6")
         print("DMM DCI Range: 1mA")
     elif ix >= 12 and ix < 17:
-        dmm.write("DCI 0.01,FAST_OFF")
+        dmm.write("DCI 0.01,FAST_OFF,RESL6")
         print("DMM DCI Range: 10mA")
     elif ix >= 17 and ix < 22:
-        dmm.write("DCI 0.1,FAST_OFF")
+        dmm.write("DCI 0.1,FAST_OFF,RESL6")
         print("DMM DCI Range: 100mA")
     elif ix >= 22 and ix < 27:
-        dmm.write("DCI 1,FAST_OFF")
+        dmm.write("DCI 1,FAST_OFF,RESL6")
         print("DMM DCI Range: 1A")        
     else:
-        dmm.write("DCI 1,FAST_OFF")
+        dmm.write("DCI 1,FAST_OFF,RESL6")
     F5700EP.write("OUT %s" % iout)
     F5700EP.write("OPER")
     if ix == 23:
@@ -778,7 +776,7 @@ ACI_list = ["10 uA, 10 Hz","10 uA, 20 Hz","10 uA, 30 Hz","10 uA, 40 Hz","10 uA, 
             "100 mA, 10 Hz","100 mA, 20 Hz","100 mA, 30 Hz","100 mA, 40 Hz","100 mA, 55 Hz","100 mA, 300 Hz","100 mA, 1 KHz","100 mA, 5 KHz","100 mA, 10 KHz",
             "1 A, 10 Hz","1 A, 20 Hz","1 A, 30 Hz","1 A, 40 Hz","1 A, 55 Hz","1 A, 300 Hz","1 A, 1 KHz","1 A, 5 KHz","1 A, 10 KHz"]
 
-dmm.write("ACI 1,FAST_OFF")
+dmm.write("ACI 1,RESL5")
 
 for ix in range (0,54):
     array = []
@@ -807,17 +805,17 @@ for ix in range (0,54):
         ACIrange = "1"
     
     
-    if (cutstr[4]=="Hz"):
-        if (int(cutstr[3])<=9):
-            dmm.write("ACI FILT1HZ")
-        elif (int(cutstr[3])<=39):
-            dmm.write("ACI FILT10HZ")
-        elif (int(cutstr[3])<=99):
-            dmm.write("ACI FILT40HZ")
+    if (cutstr[3]=="Hz"):
+        if (int(cutstr[2])<=9):
+            dmm.write("ACI %s, FILT1HZ,RESL5" %(ACIrange))
+        elif (int(cutstr[2])<=39):
+            dmm.write("ACI %s, FILT10HZ,RESL5" %(ACIrange))
+        elif (int(cutstr[2])<=99):
+            dmm.write("ACI %s, FILT40HZ,RESL5" %(ACIrange))
         else:
-            dmm.write("ACI FILT100HZ")
+            dmm.write("ACI %s, FILT100HZ,RESL5" %(ACIrange))
     else:
-        dmm.write("ACI FILT100HZ")
+        dmm.write("ACI %s, FILT100HZ,RESL5" %(ACIrange))
             
 
     F5700EP.write("OUT %s" % iout)
