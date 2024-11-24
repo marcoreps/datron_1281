@@ -195,7 +195,6 @@ for ix in range (0,5):
     sdev = 0.0
     median = 0.0
     unc = 0
-    Quality = 0
     cutstr = []
     if ix == 0:
         dmm.write("DCV 0.1,FAST_OFF")
@@ -208,7 +207,6 @@ for ix in range (0,5):
     if ix == 4:
         dmm.write("DCV 1000,FAST_OFF")
     for i in range (0,10) :
-        
         volt = float(dmm.query("X?"))
         array.extend([volt])
     sdev = np.std(array[1:],ddof = 1)
@@ -222,11 +220,7 @@ for ix in range (0,5):
     cutstr = unc.split(",")
     ws['D' + str(45+ix)] = float(cutstr[0])
     
-
-    dmm.write("DEVTN? ABSOLUTE")
-    Quality = float(dmm.query("X?"))
-    ws['K' + str(45+ix)] = Quality*1e6        
-    print("Source = %s, dmm = %.10f V,  sdev = %.3f uV, Quality(DMM) = %.3f uV" % ("0 V", median, sdev*1e6, Quality*1e6))
+    print("Source = %s, dmm = %.10f V,  sdev = %.3f uV" % ("0 V", median, sdev*1e6))
     print(array)
 wb.save('test_1281.xlsx')
 
@@ -245,7 +239,6 @@ for ix in range (0,42):
     sdev = 0.0
     median = 0.0
     unc = 0
-    Quality = 0
     vout = float(DCV_list[ix])
     if abs(vout) <= 0.1 and ix < 8:
         dmm.write("DCV 0.1,FAST_OFF")
@@ -291,12 +284,8 @@ for ix in range (0,42):
         ws['D' + str(51+ix)] = float(cutstr[0])*1e6/vout
     else:
         ws['D' + str(51+ix)] = float(cutstr[0])
-        
-        
-    dmm.write("DEVTN? READING")
-    Quality = float(dmm.query("X?"))
-    ws['K' + str(51+ix)] = Quality    
-    print("Source = %.3f V, dmm = %.8f V,  sdev = %.3f ppm, Quality(DMM) =  %s" % (vout, median, sdev*1e6/median, Quality))
+
+    print("Source = %.3f V, dmm = %.8f V,  sdev = %.3f ppm" % (vout, median, sdev*1e6/median))
     print(array)
 
     
@@ -334,7 +323,6 @@ for ix in range (0,18):
     median = 0.0
     cutstr = []
     unc = 0
-    Quality = 0
     res = MFC_OHM_list[ix]
     if ix == 0:
         dmm.write("OHMS 1,FWR,FAST_OFF")
@@ -425,10 +413,8 @@ for ix in range (0,18):
     ws['D' + str(105+ix)] = float(cutstr[0])
     
 
-    dmm.write("DEVTN? READING")
-    Quality = float(dmm.query("X?"))
-    ws['K' + str(105+ix)] = Quality    
-    print("Source = %s, dmm = %.8f ohm,  sdev = %.3f ppm, Quality(DMM) =  %s" % (res, median, sdev*1e6/median, Quality))
+ 
+    print("Source = %s, dmm = %.8f ohm,  sdev = %.3f ppm" % (res, median, sdev*1e6/median))
     print(array)
 wb.save('test_1281.xlsx')
 
@@ -446,7 +432,6 @@ for ix in range (0,9):
     sdev = 0.0
     median = 0.0
     unc = 0
-    Quality = 0
     if ix == 0:
         dmm.write("OHMS 1,FWR,FAST_OFF")
         print("DMM FWR Zero Range: 1 OHM")
@@ -489,10 +474,8 @@ for ix in range (0,9):
     
     cutstr = unc.split(",")
     ws['D' + str(130+ix)] = float(cutstr[0])
-    dmm.write("DEVTN? ABSOLUTE")
-    Quality = float(dmm.query("X?"))
-    ws['K' + str(130+ix)] = Quality    
-    print("Source = %s, dmm = %.8f ohm,  sdev = %.8f ohm,  Quality(DMM) = %.8f ohm " % ("0 ohm", median, sdev, Quality))
+
+    print("Source = %s, dmm = %.8f ohm,  sdev = %.8f ohm" % ("0 ohm", median, sdev))
     print(array)
 wb.save('test_1281.xlsx')
 
@@ -509,7 +492,6 @@ for ix in range (0,8):
     sdev = 0.0
     median = 0.0
     unc = 0
-    Quality = 0
 
     if ix == 0:
         dmm.write("OHMS 1,TWR,FAST_OFF")
@@ -553,11 +535,8 @@ for ix in range (0,8):
     unc = F5700EP.read()
     cutstr = unc.split(",")
     ws['D' + str(146+ix)] = float(cutstr[0])
-    
-    dmm.write("DEVTN? ABSOLUTE")
-    Quality = float(dmm.query("X?"))
-    ws['K' + str(146+ix)] = Quality    
-    print("Source = %s, dmm = %.8f ohm,  sdev = %.8f ohm, Quality(DMM) = %.8f ohm " % ("0 ohm", median, sdev, Quality))
+     
+    print("Source = %s, dmm = %.8f ohm,  sdev = %.8f ohm" % ("0 ohm", median, sdev))
     print(array)
     
 F5700EP.write("EXTSENSE OFF")    
@@ -570,22 +549,14 @@ time_start = time.time()
 F5700EP.write("OUT 0 V, 0 Hz")
 F5700EP.write("STBY")
 
-#########################
-#ACV FWR
-while 1:
-    str_input = input("connect the cable for ACV FWR, and then input: go\n")
-    if (str_input == 'go'):
-        break
-    else:
-        print("input again")
-#########################
-   
+
+
 ########## ACV PERFORMANCE TEST ##########
 print("ACV PERFORMANCE TEST")
 ACV_LIN_list = ["1 V,1 KHz","2 V, 1 KHz","5 V, 1 KHz","10 V, 1 KHz","12 V, 1 KHz","15 V, 1 KHz","19 V, 1 KHz"]
 ### AC VOLTAGE Linearity Checks ###
 
-dmm.write("ACV 10,RESL8,FOUR_WR,FAST_OFF")
+dmm.write("ACV 10,RESL8,FAST_OFF")
 
 F5700EP.write("OUT 1 V, 1 KHz")
 F5700EP.write("OPER")
@@ -596,7 +567,6 @@ for ix in range (0,7):
     sdev = 0.0
     median = 0.0
     unc = 0
-    Quality = 0
     acv = ACV_LIN_list[ix]        
     F5700EP.write("OUT %s" % acv)
     F5700EP.write("OPER")
@@ -619,10 +589,8 @@ for ix in range (0,7):
     else:
         ws['D' + str(161+ix)] = float(cutstr[0])
         
-    dmm.write("DEVTN? READING")
-    Quality = float(dmm.query("X?"))
-    ws['K' + str(161+ix)] = Quality    
-    print("Source = %s , dmm = %.8f Vac,  sdev = %.3f ppm, Quality(DMM) =  %s" % (acv, median, sdev*1e6/median, Quality))
+
+    print("Source = %s , dmm = %.8f Vac,  sdev = %.3f ppm" % (acv, median, sdev*1e6/median))
     print(array)
     
 F5700EP.write("STBY")
@@ -647,7 +615,7 @@ ACV_list = ["0.001 V, 10 Hz","0.001 V, 20 Hz","0.001 V, 30 Hz","0.001 V, 40 Hz",
 
 
 
-dmm.write("ACV 10,RESL8,FOUR_WR,FAST_OFF")
+dmm.write("ACV 10,RESL8,FAST_OFF")
 for ix in range (0,112):
     array = []
     sdev = 0.0
@@ -659,6 +627,18 @@ for ix in range (0,112):
     cutstr = acv.split(" ")
 
     dmm.write("ACV %s,FAST_OFF" %(cutstr[0]))
+    
+    if (cutstr[4]=="Hz"):
+        if (int(cutstr[3])<=9):
+            dmm.write("ACV FILT1HZ")
+        elif (int(cutstr[3])<=39):
+            dmm.write("ACV FILT10HZ")
+        elif (int(cutstr[3])<=99):
+            dmm.write("ACV FILT40HZ")
+        else:
+            dmm.write("ACV FILT100HZ")
+    else:
+        dmm.write("ACV FILT100HZ")
     
     F5700EP.write("FAULT?")
     fault = F5700EP.read()
@@ -691,10 +671,8 @@ for ix in range (0,112):
         ws['D' + str(170+ix)] = float(cutstr[0])*1e4
     else:
         ws['D' + str(170+ix)] = float(cutstr[0])
-    dmm.write("DEVTN? READING")
-    Quality = float(dmm.query("X?"))
-    ws['K' + str(170+ix)] = Quality        
-    print("Source = %s , dmm = %.8f Vac,  sdev = %.3f ppm, Quality(DMM) =  %s" % (acv, median, sdev*1e6/median, Quality))
+    
+    print("Source = %s , dmm = %.8f Vac,  sdev = %.3f ppm" % (acv, median, sdev*1e6/median))
     print(array)
     
 F5700EP.write("OUT 250 V, 1 KHz")
@@ -779,10 +757,8 @@ for ix in range (0,27):
         ws['D' + str(287+ix)] = float(cutstr[0])*1e6/median
     else:    
         ws['D' + str(287+ix)] = float(cutstr[0])
-    dmm.write("DEVTN? READING")
-    Quality = float(dmm.query("X?"))
-    ws['K' + str(287+ix)] = Quality
-    print("Source = %s, dmm = %.10f A,  sdev = %.3f ppm, Quality(DMM) = %s" % (iout, median, sdev*1e6/median, Quality))
+
+    print("Source = %s, dmm = %.10f A,  sdev = %.3f ppm" % (iout, median, sdev*1e6/median))
     print(array)
 wb.save('test_1281.xlsx')
 
@@ -830,10 +806,19 @@ for ix in range (0,54):
     else:
         ACIrange = "1"
     
-    if (cutstr[3]== "Hz") and (float(cutstr[2]) < 40):
-        dmm.write("ACI %s,DCCP,FAST_OFF" %(ACIrange))
+    
+    if (cutstr[4]=="Hz"):
+        if (int(cutstr[3])<=9):
+            dmm.write("ACI FILT1HZ")
+        elif (int(cutstr[3])<=39):
+            dmm.write("ACI FILT10HZ")
+        elif (int(cutstr[3])<=99):
+            dmm.write("ACI FILT40HZ")
+        else:
+            dmm.write("ACI FILT100HZ")
     else:
-        dmm.write("ACI %s,ACCP,FAST_OFF" %(ACIrange))
+        dmm.write("ACI FILT100HZ")
+            
 
     F5700EP.write("OUT %s" % iout)
     F5700EP.write("OPER")
@@ -861,10 +846,8 @@ for ix in range (0,54):
         ws['D' + str(317+ix)] = float(cutstr[0])*1e6/median
     else:
         ws['D' + str(317+ix)] = float(cutstr[0])
-    dmm.write("DEVTN? READING")
-    Quality = float(dmm.query("X?"))
-    ws['K' + str(317+ix)] = Quality
-    print("Source = %s, dmm = %.10f A,  sdev = %.3f ppm, Quality(DMM) =  %s" % (iout, median, sdev*1e6/median, Quality)) 
+
+    print("Source = %s, dmm = %.10f A,  sdev = %.3f ppm" % (iout, median, sdev*1e6/median)) 
     print(array)
 
 
