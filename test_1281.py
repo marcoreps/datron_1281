@@ -317,7 +317,7 @@ time.sleep(100)
 
 
 
-for ix in range (0,18): 
+for ix in range (0,17): 
     array = []
     sdev = 0.0
     median = 0.0
