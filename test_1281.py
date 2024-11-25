@@ -299,11 +299,11 @@ wb.save('test_1281.xlsx')
 print("DCV time elapsed:%.2f minutes"
       % ((time.time() - time_start)/60))
 time_start = time.time()
-        
+
 ########## OHM PERFORMANCE TEST ##########
 print("OHM PERFORMANCE TEST")
 MFC_OHM_list = ["1 OHM","1.9 OHM","10 OHM","19 OHM","100 OHM","190 OHM","1 KOHM","1.9 KOHM","10 KOHM",
-                "19 KOHM","100 KOHM","190 KOHM","1 MOHM","1.9 MOHM","10 MOHM","19 MOHM","100 MOHM","100 MOHM"]
+                "19 KOHM","100 KOHM","190 KOHM","1 MOHM","1.9 MOHM","10 MOHM","19 MOHM","100 MOHM"]
 
 F5700EP.write("OUT 0 OHM")
 F5700EP.write("EXTSENSE ON")
@@ -373,12 +373,8 @@ for ix in range (0,18):
         dmm.write("OHMS 10000000,FWR,FAST_OFF,RESL8")
         print("DMM OHMS FWR Range: 10 MOHM")
     elif ix == 16:
-        dmm.write("HI_OHMS 100000000,FWR,FAST_OFF")
-        F5700EP.write("EXTSENSE OFF")
-    elif ix == 17:
         dmm.write("HI_OHMS 100000000,TWR,FAST_OFF")
         F5700EP.write("EXTSENSE OFF")
-
         print("DMM OHMS TWR Range: 100 MOHM, PCENT_100") 
         
         
