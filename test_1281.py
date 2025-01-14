@@ -47,16 +47,22 @@ time_start = time.time()
 ########## Colecting info of DMM & Calibrator ##########
 ########## info of DMM ##########
 
-cutstr = []   
+cutstr = []
 dmm.write("*IDN?")
-info = dmm.read()
-cutstr = info.split(",")
+print("asked for IDN")
+info =  dmm.read_bytes(23)
+print(info)
+cutstr = str(info).split(",")
 ws['C5'] = cutstr[0] #Manufacturer
 ws['C6'] = cutstr[1]  #Model Number
+dmm.read_bytes(27)
 dmm.write("*OPT?")
+print("asked for OPT")
 info = dmm.read()
+print(info)
 ws['C8'] = info #Options
-ws['C9'] = cutstr[3] #Firmware
+#ws['C9'] = cutstr[3] #Firmware
+
 
 #dmm.write("TST?")
 #time.sleep(600)
@@ -64,7 +70,7 @@ ws['C9'] = cutstr[3] #Firmware
 #ws['C12'] = info # Fast Test: returns '0' if OK,otherwise '1' 
 
 
-ws['H5'] = cutstr[2] #S/N######
+#ws['H5'] = cutstr[2] #S/N######
 ws['H6'] = time.strftime("%y-%m-%d %H:%M:%S")#Test date
 ws['H7'] = '23.0' #Ambient Temperature N######
 
