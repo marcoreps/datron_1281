@@ -31,7 +31,7 @@ rm = visa.ResourceManager()
 #dmm = rm.open_resource("TCPIP::192.168.0.88::GPIB0,16") # Ethernet GPIB Dongle
 
 F5700EP = rm.open_resource('GPIB0::1::INSTR') # Local GPIB Dongle
-dmm = rm.open_resource('GPIB0::9::INSTR') # Local GPIB Dongle
+dmm = rm.open_resource('GPIB0::16::INSTR') # Local GPIB Dongle
 
 
 while 1:
