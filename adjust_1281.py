@@ -128,7 +128,7 @@ F5700EP.write("OUT 1000 V, 30 kHz")
 F5700EP.write("OPER")
 logging.info("Cal ACV 30kHz 1000 V")
 time.sleep(settling_time)
-for iteration in high_freq_iterations:
+for iteration in range(high_freq_iterations):
     if(dmm.query("CAL?") != '0\n'):
         logging.info("Error")
         finish()
