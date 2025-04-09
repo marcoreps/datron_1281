@@ -27,11 +27,11 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)-8s %(me
 logging.info("Starting ...")
 
 rm = visa.ResourceManager()
-F5700EP = rm.open_resource("TCPIP::192.168.0.88::GPIB0,1") # Ethernet GPIB Dongle
-dmm = rm.open_resource("TCPIP::192.168.0.88::GPIB0,16") # Ethernet GPIB Dongle
+#F5700EP = rm.open_resource("TCPIP::192.168.0.88::GPIB0,1") # Ethernet GPIB Dongle
+#dmm = rm.open_resource("TCPIP::192.168.0.88::GPIB0,16") # Ethernet GPIB Dongle
 
-#F5700EP = rm.open_resource('GPIB0::1::INSTR') # Local GPIB Dongle
-##dmm = rm.open_resource('GPIB0::9::INSTR') # Local GPIB Dongle
+F5700EP = rm.open_resource('GPIB0::1::INSTR') # Local GPIB Dongle
+dmm = rm.open_resource('GPIB0::9::INSTR') # Local GPIB Dongle
 
 
 while 1:
@@ -117,7 +117,7 @@ for v in [0.1,1,10,100]:
     F5700EP.write("OPER")
     logging.info("Cal ACV 60kHz "+str(v)+" V")
     time.sleep(settling_time)
-    for iteration in high_freq_iterations:
+    for iteration in range(high_freq_iterations):
         if(dmm.query("CAL?") != '0\n'):
             logging.info("Error")
             finish()
